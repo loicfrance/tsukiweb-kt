@@ -6,7 +6,7 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { logger } from '@tsukiweb/common/tools/utils/logger.ts'
-import { fullscripts, outputPathPrefix } from './fullscripts.ts'
+import { fullscripts, loadLangPreprocess, outputPathPrefix } from './fullscripts.ts'
 
 const ENTRY_LABEL = 'select_message'
 const MSG_LINES = 9
@@ -254,18 +254,10 @@ export function extractDailyMessages(script: string, fix?: LineFix): DailyMessag
 	return { random: random.filter(msg => msg.text.length > 0 && isOriginal(msg)), dates }
 }
 
-async function processSingleScript(folder: string, filename: string) {
+function processSingleScript(folder: string, filename: string) {
 	let txt = fs.readFileSync(path.join(outputPathPrefix, folder, 'sources', filename), 'utf-8')
-	let fix: LineFix|undefined
-	let preprocess_module_path = path.join(outputPathPrefix, folder, 'preprocess.js')
-	if (fs.existsSync(preprocess_module_path)) {
-		preprocess_module_path = path.relative(import.meta.dirname, preprocess_module_path)
-		const lang_module = await import(preprocess_module_path.replaceAll('\\', '/'))
-		if ('kt_raw_fixes' in lang_module)
-			txt = lang_module.kt_raw_fixes(txt) || txt
-		if ('kt_daily_message_fixes' in lang_module)
-			fix = lang_module.kt_daily_message_fixes
-	}
+	const { kt_raw_fixes, kt_daily_message_fixes: fix } = loadLangPreprocess(folder)
+	txt = kt_raw_fixes?.(txt) || txt
 	const messages = extractDailyMessages(txt, fix)
 
 	const gameJsonPath = path.join(outputPathPrefix, folder, 'game.json')
@@ -279,14 +271,14 @@ async function processSingleScript(folder: string, filename: string) {
 	return messages
 }
 
-export async function main() {
+export function main() {
 	const totalScripts = fullscripts.length
 	let processedCount = 0
 	for (const [folder, filename] of fullscripts) {
 		processedCount++
 		logger.progress(`Extracting daily messages: ${processedCount}/${totalScripts} (${filename})`)
 		try {
-			await processSingleScript(folder, filename)
+			processSingleScript(folder, filename)
 		} catch (e) {
 			logger.error(`Error processing ${filename}: ${(e as Error).message}`)
 		}

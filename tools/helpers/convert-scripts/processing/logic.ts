@@ -12,7 +12,7 @@ import { logger } from '@tsukiweb/common/tools/utils/logger.ts';
 import { updateGameJsonWithChoices } from '../utils/choices_extractor.ts';
 import { isLogicLabel, isSceneLabel, processVarName } from './common.ts';
 import { addChoiceCondition, isCmd, processCondition } from '@tsukiweb/common/tools/convert-scripts/utils.ts';
-import { fullscripts, outputPathPrefix } from './fullscripts.ts';
+import { fullscripts, loadLangPreprocess, outputPathPrefix } from './fullscripts.ts';
 
 const LOGIC_FILE = "logic"
 const GEN_CHOICES_JSON = true
@@ -535,7 +535,7 @@ function extractChoices(blocks: Map<string, Block>) {
 /**
  * @returns blocks tree, choice texts, logic script
  */
-async function processSingleScript(folder: string, filename: string): Promise<[string, Record<string, string[]>, string]> {
+function processSingleScript(folder: string, filename: string): [string, Record<string, string[]>, string] {
 	const fullscriptPath = path.join(outputPathPrefix, folder, 'sources', filename)
 
 	if (!fs.existsSync(fullscriptPath)) {
@@ -547,16 +547,8 @@ async function processSingleScript(folder: string, filename: string): Promise<[s
 	let txt = fs.readFileSync(fullscriptPath, 'utf-8')
 				.replaceAll('\n\t', '\n')
 				.replaceAll(/^select\s*(\r?\n([`"][^`"]*[`"],\s*\*\w+,\s*\r?\n)*([`"][^`"]*[`"],\s*\*\w+))$/gm, (m)=> m.replaceAll(/\r?\n/g, ' '))
-	let block_fixes = {}
-	let preprocess_module_path = path.join(outputPathPrefix, folder, 'preprocess.js')
-	if (fs.existsSync(preprocess_module_path)) {
-		preprocess_module_path = path.relative(import.meta.dirname, preprocess_module_path)
-		const lang_module = await import(preprocess_module_path.replaceAll('\\', '/'))
-		if ('kt_raw_fixes' in lang_module)
-			txt = lang_module.kt_raw_fixes(txt) || txt
-		if ('block_fixes' in lang_module)
-			block_fixes = lang_module.block_fixes
-	}
+	const { kt_raw_fixes, block_fixes = {} } = loadLangPreprocess(folder)
+	txt = kt_raw_fixes?.(txt) || txt
 	const tokens = parseScript(txt)
 	const blocks = splitBlocks(tokens, getBlockProps.bind(undefined,
 		new Map(Object.entries(block_fixes))
@@ -569,7 +561,7 @@ async function processSingleScript(folder: string, filename: string): Promise<[s
 	return [tree, choices, fileContents.get(LOGIC_FILE)!]
 }
 
-export async function main() {
+export function main() {
 	const totalScripts = fullscripts.length
 	let logicScript = null
 	let blocksTree = null
@@ -581,7 +573,7 @@ export async function main() {
 
 		try {
 			//1. Extract blocks tree, choice texts and logic script
-			const [tree, choices, logicContent] = await processSingleScript(folder, filename)
+			const [tree, choices, logicContent] = processSingleScript(folder, filename)
 
 			//2. Compare blocks tree and logic script with previous languages
 			if (blocksTree == null && logicScript == null)

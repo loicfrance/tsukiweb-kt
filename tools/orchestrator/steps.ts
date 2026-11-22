@@ -184,8 +184,8 @@ async function extractAssetsAndPrepareImages(paths: Paths): Promise<void> {
 async function runScripts(paths: Paths): Promise<void> {
   await withWorkingDirectory(path.join(paths.tools, 'helpers', 'convert-scripts'), async () => {
     runLogicScripts()
-    await runSceneScripts()
-    await runDailyMessages()
+    runSceneScripts()
+    runDailyMessages()
   })
 }
 

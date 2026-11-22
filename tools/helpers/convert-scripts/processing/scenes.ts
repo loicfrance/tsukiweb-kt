@@ -12,7 +12,7 @@ import { logger } from '@tsukiweb/common/tools/utils/logger.ts';
 import { fixContexts } from '../utils/context.ts';
 import { processVarName, isSceneLabel, preprocessRawScript } from './common.ts';
 import { isCmd, processCondition } from '@tsukiweb/common/tools/convert-scripts/utils.ts';
-import { fullscripts, outputPathPrefix } from './fullscripts.ts';
+import { fullscripts, loadLangPreprocess, outputPathPrefix } from './fullscripts.ts';
 
 const outputDir = 'scenes'
 const limitScenes: string[] = [
@@ -578,7 +578,7 @@ function getFileName(label: string) {
 }
 
 
-async function processSingleScript(folder: string, filename: string,
+function processSingleScript(folder: string, filename: string,
 		outputDir: string|null,
 		blocksTree: Map<string, {parents: string[], children: string[], endContext: object|null}>) {
 	const fullscriptPath = path.join(outputPathPrefix, folder, 'sources', filename)
@@ -592,19 +592,8 @@ async function processSingleScript(folder: string, filename: string,
 				.replaceAll('\n\t', '\n')
 				.replaceAll(/^select\s*(\r?\n([`"][^`"]*[`"],\s*\*\w+,\s*\r?\n)*([`"][^`"]*[`"],\s*\*\w+))$/gm, (m)=> m.replaceAll(/\r?\n/g, ' '))
 	txt = preprocessRawScript(txt)
-	let eroskip_pages = {}
-	let block_fixes = {}
-	let preprocess_module_path = path.join(outputPathPrefix, folder, 'preprocess.js')
-	if (fs.existsSync(preprocess_module_path)) {
-		preprocess_module_path = path.relative(import.meta.dirname, preprocess_module_path)
-		const lang_module = await import(preprocess_module_path.replaceAll('\\', '/'))
-		if ('kt_raw_fixes' in lang_module)
-			txt = lang_module.kt_raw_fixes(txt) || txt
-		if ('eroskip_pages' in lang_module)
-			eroskip_pages = lang_module.eroskip_pages
-		if ('block_fixes' in lang_module)
-			block_fixes = lang_module.block_fixes
-	}
+	const { kt_raw_fixes, eroskip_pages = {}, block_fixes = {} } = loadLangPreprocess(folder)
+	txt = kt_raw_fixes?.(txt) || txt
 	const tokens = parseScript(txt)
 	
 	let blocks = splitBlocks(tokens, getBlockProps.bind(undefined,
@@ -629,7 +618,7 @@ async function processSingleScript(folder: string, filename: string,
 }
 
 
-export async function main() {
+export function main() {
 
 	//1. Retrieve scenes tree
 	const treeFilePath = path.join('.', "logic_tree.txt")
@@ -657,7 +646,7 @@ export async function main() {
 		processedCount++
 		logger.progress(`Processing fullscripts: ${processedCount}/${totalScripts} (${filename})`)
 		try {
-			await processSingleScript(folder, filename, outputDir, tree)
+			processSingleScript(folder, filename, outputDir, tree)
 		} catch (e) {
 			logger.error(`Error processing ${filename}: ${(e as Error).message}`)
 		}

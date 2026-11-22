@@ -1,13 +1,13 @@
 import { main as runTH } from './processing/scenes.ts';
 import { main as runTsLogic } from './processing/logic.ts';
 
-async function main() {
+function main() {
     try {
         console.log('--- Starting scenes generation ---\n')
         
         runTsLogic()
 
-        await runTH()
+        runTH()
 
         console.log('\n--- Scenes generated ---')
     } catch (error) {
