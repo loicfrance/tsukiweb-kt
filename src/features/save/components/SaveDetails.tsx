@@ -6,8 +6,6 @@ import classNames from "classnames"
 import { jsonMerge } from "@tsukiweb/common/utils/utils"
 import { Button } from "@tsukiweb/common/ui-core"
 import { ProgressPanel } from "features/game/components/shared/ProgressPanel";
-import { getSceneTitle, isScene } from "engine/utils";
-import { SceneName } from "app/utils/types";
 import { settings } from "engine/settings";
 import { useEventActions } from "@tsukiweb/common/input/eventActions";
 import { savesKeyMap } from "features/game/utils/keybind";
@@ -25,8 +23,7 @@ const SaveDetails = ({id, saveState, deleteSave}: SaveDetailsProps)=> {
 			lastPage?.graphics ?? {bg: "#000"})
 	const points = settings.flowchartBadges ? progress?.points ?? {} : {}
 	const flags = settings.flowchartBadges ? progress?.flags ?? [] : []
-	const lastScene = saveState?.pages.findLast(p=>p.label && isScene(p.label))?.label as SceneName|undefined
-	
+
 	useEventActions(savesKeyMap, (action: string)=> {
 		if (action == "delete" && id != undefined) {
 			deleteSave(id)
@@ -40,13 +37,7 @@ const SaveDetails = ({id, saveState, deleteSave}: SaveDetailsProps)=> {
 		<section className={classNames("info", { "preview-save": saveState !== undefined })}>		
 			{id != undefined && saveState != undefined && <>
 				<div className="graphics-wrapper">
-					{(graphics) &&
-						<GraphicsGroup images={graphics} />
-					}
-
-					<div className="deta">
-						<div>{lastScene && getSceneTitle(lastScene)}</div>
-					</div>
+					<GraphicsGroup images={graphics} />
 				</div>
 				<div className="save-details-content">
 					<ProgressPanel points={points} flags={flags}/>
