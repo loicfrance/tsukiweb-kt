@@ -124,8 +124,7 @@ const DailyMessagesList = () => {
 			<div className="daily-viewer">
 				<button type="button" className="daily-viewer-stage"
 					disabled={!shown}
-					onClick={() => shown && setOpened(shown.message)}
-					onContextMenu={e => e.preventDefault()}>
+					onClick={() => shown && setOpened(shown.message)}>
 					<AnimatePresence initial={false}>
 						{shown &&
 							<m.div key={shown.key} className="daily-viewer-slide"

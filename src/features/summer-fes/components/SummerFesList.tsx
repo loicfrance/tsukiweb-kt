@@ -25,7 +25,6 @@ const FesShortcut = ({ id, images, title, className }: FesShortcutProps) => (
 		tabIndex={0}
 		onClick={() => play(id)}
 		onKeyDown={e => e.key === "Enter" && play(id)}
-		onContextMenu={e => e.preventDefault()}
 		nav-auto={1}
 	>
 		<GraphicsGroup images={images} lazy />

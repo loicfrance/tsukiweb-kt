@@ -27,7 +27,6 @@ const SaveListItem = ({saveId, saveState, isFocused, ...props}: SaveListItemProp
 	return (
 		<button
 			className={classNames("save-container", {active: isFocused})}
-			onContextMenu={e => e.preventDefault()}
 			{...props}
 		>
 			<div className="graphics-area">

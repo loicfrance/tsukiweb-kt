@@ -71,7 +71,6 @@ const HelpList = () => {
 						tabIndex={0}
 						onClick={() => play(id)}
 						onKeyDown={e => e.key === "Enter" && play(id)}
-						onContextMenu={e => e.preventDefault()}
 						nav-auto={1}
 					>
 						{seen ?
