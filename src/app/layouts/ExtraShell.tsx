@@ -98,7 +98,12 @@ const ExtraShell = ({ children }: PropsWithChildren) => {
 
 			<ExtraMenu pages={pages} currentPage={currentPage} navigate={navigate} />
 
-			<HintsBar className="extra-footer" audio={audio} onBack={()=>navigate(SCREEN.TITLE)} />
+			<HintsBar className="extra-footer" audio={audio} onBack={()=>navigate(SCREEN.TITLE)}>
+				<PageSwitcher className="extra-switcher" audio={audio}
+					pages={pages.map(({ screen, label, attention, locked }) => ({ value: screen, label, attention, locked }))}
+					selected={currentPage}
+					onSelect={navigate} />
+			</HintsBar>
 		</m.div>
 	)
 }
@@ -134,10 +139,6 @@ const ExtraMenu = ({ pages, currentPage, navigate }: MenuProps) => {
 					</TitleMenuButton>
 				)}
 			</div>
-			<PageSwitcher className="extra-switcher" audio={audio}
-				pages={pages.map(({ screen, label, attention, locked }) => ({ value: screen, label, attention, locked }))}
-				selected={currentPage}
-				onSelect={navigate} />
 			<div className="back-action">
 				<BackButton compact audio={audio} onClick={()=>navigate(SCREEN.TITLE)} nav-auto={1} />
 			</div>

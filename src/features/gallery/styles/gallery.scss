@@ -4,6 +4,7 @@
 #gallery {
 	height: 100%;
 	overflow-y: auto;
+	clip-path: inset(0);
 	scrollbar-gutter: stable;
 	padding-top: .5rem;
 	padding-right: var(--extra-bleed);
