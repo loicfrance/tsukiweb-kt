@@ -250,12 +250,12 @@
   },
   "images": {
     "word-subtitles": {
-      "ganba_01": "Good luck, Ciel-sensei",
+      "ganba_01": "Buena Suerte, Ciel-sensei",
       "ganba_04": "/end",
       "sos_01": "NANAKO-CHAN SOS",
-      "ssa_01": "HISUI-CHAN, Inversion Impulse!",
-      "ssc_01": "Dawn",
-      "sss_01": "Drinking. Dreaming Moon"
+      "ssa_01": "HISUI-CHAN, Impulso de Inversión!",
+      "ssc_01": "Amanecer",
+      "sss_01": "Ebria, Soñadora Luna"
     },
     "words": {
       "fin": "#ffffff$c`[center][noline][color=black][font=serif]Fin`",
@@ -270,17 +270,17 @@
   },
   "scenario": {
     "scenes": {
-      "s528": "Good luck, Ciel-sensei",
-      "s529": "A Story for the Evening",
-      "s530": "Crimson Moon",
-      "s531": "Red Demon God",
-      "s532": "Nanako-chan SOS!",
+      "s528": "¡Buena Suerte, Ciel-sensei!",
+      "s529": "Una Historia para el Atardecer",
+      "s530": "Luna Carmesí",
+      "s531": "El Dios Demonio Rojo",
+      "s532": "¡Nanako-chan SOS!",
       "s533": "Imogirisou",
-      "s534": "Flower of Thanatos",
-      "s535": "Hisui-chan, Inversion Inpulse!",
-      "s536": "The Tohno Family Con Game",
-      "s537": "Dawn",
-      "s543": "Drinking, Dreaming Moon"
+      "s534": "Flor de Thanatos",
+      "s535": "¡Hisui-chan, Impulso de Inversión!",
+      "s536": "La Estafa de la Familia Tohno",
+      "s537": "Amanecer",
+      "s543": "Ebria, Soñadora Luna"
     }
   },
   "credits": [
@@ -1196,7 +1196,7 @@
           "Tohno Akiha.",
           "　Cumpleaños: 22 de Septiembre.",
           "　Tipo de sangre: A.",
-          "　Altura/Peso: 160m/45kg.",
+          "　Altura/Peso: 1.60m/45kg.",
           "　Medidas: 73/57/79."
         ],
         "fg": "msg/ran_t03"
@@ -1648,7 +1648,7 @@
       },
       {
         "text": [
-          "Originalmente, Shiki se volvía un delicuente tras ser capaz de ver la muerte…\"mov $msgline1,\""
+          "Originalmente, Shiki se volvía un delicuente tras ser capaz de ver la muerte…"
         ]
       },
       {
@@ -1745,7 +1745,7 @@
       },
       {
         "text": [
-          " 27 Dead Apostle Ancestors Series",
+          "La serie de los 27 Apóstoles Muertos",
           "　１３／？？？？",
           "　Su existencia sólo es un rumor. Tatari, la maldición.",
           "　Intento hacer de ella un fenómeno, pero esta se acabó."

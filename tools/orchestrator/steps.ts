@@ -183,7 +183,7 @@ async function extractAssetsAndPrepareImages(paths: Paths): Promise<void> {
     if (!(await pathExists(source))) continue
     for (const entry of await fs.readdir(source, { withFileTypes: true })) {
       if (entry.isDirectory()) {
-        if (entry.name === 'tachi') {
+        if (entry.name === 'tachi' || entry.name === 'msg') {
           await applySpriteTransparency(path.join(source, entry.name), path.join(img, entry.name))
         } else {
           await copyDirectory(path.join(source, entry.name), path.join(img, entry.name), paths.workspace)

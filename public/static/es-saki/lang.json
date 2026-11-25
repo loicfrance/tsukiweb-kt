@@ -29,14 +29,14 @@
   "extra": {
     "gallery": "Galería",
     "scenes": "Diagrama de flujo",
-    "summer-fes": "Summer Festivals",
-    "dreams": "Ten Nights of Dreams",
-    "help": "Help",
-    "help-lesson": "Lesson %0",
+    "summer-fes": "Festival de Verano.",
+    "dreams": "Diez Noches de Sueño.",
+    "help": "Ayuda",
+    "help-lesson": "Lección %0",
     "help-bonus": "Bonus",
-    "daily-messages": "Daily messages",
-    "daily-messages-random": "Messages",
-    "daily-messages-dates": "Special days"
+    "daily-messages": "Mensajes diarios",
+    "daily-messages-random": "Mensajes",
+    "daily-messages-dates": "Días especiales"
   },
   "config": {
     "on": "Activado",
@@ -77,12 +77,12 @@
     ],
     "adult-warn": "Preguntar para omitir contenido para adultos",
     "fullscreen": "Pantalla completa",
-    "daily-message": "Daily message",
+    "daily-message": "Mensaje diario",
     "language": "Idioma",
     "show-locked-content": "Mostrar contenido bloqueado",
     "show-locked-content-help": [
-      "Reveals the complete Gallery, Flowchart, …",
-      "It can be toggled on and off at any time."
+      "Desbloquea la Galería completa, el Diagrama de flujo, etc.",
+      "Se puede activar y desactivar en cualquier momento."
     ],
     "smooth-flashes": "Reducir destellos del fondo",
     "smooth-flashes-low": "Bajo",
@@ -103,7 +103,7 @@
     "data-erase": "Eliminar",
     "data-erase-warning": "Esto eliminará todas las partidas guardadas, restablecerá todos los ajustes y el progreso. ¿Estás seguro?",
     "data-erase-confirm": "Todos los datos han sido eliminados. Si abandonas este sitio web sin hacer ningún cambio en los ajustes y sin comenzar un nuevo juego, no se almacenará ningún dato en tu dispositivo.",
-    "len-images": "Manage Len's images",
+    "len-images": "Gestionar las imágenes de Len",
     "controls": {
       "next": "Siguiente",
       "graphics": "Mostrar / ocultar texto",
@@ -137,10 +137,10 @@
     "quick-save": "Guardado rápido",
     "local-storage-warning": "Las partidas guardadas y las configuraciones se almacenan localmente en el navegador y podrían eliminarse tras un período de inactividad. Exporta tus datos regularmente.",
     "local-storage-last-export": "Última exportación completa de datos: %0",
-    "progress-discard": "Discard progress ?",
-    "progress-new": "Start from scratch",
-    "progress-start-hint": "Choose a progression to start a new loop from.",
-    "progress-save-hint": "Choose where to save this loop's progress."
+    "progress-discard": "¿Descartar el progreso?",
+    "progress-new": "Empezar desde cero",
+    "progress-start-hint": "Elige una progresión desde la que comenzar un nuevo loop.",
+    "progress-save-hint": "Elige dónde guardar el progreso de este loop."
   },
   "game": {
     "skip-viewed": "Ya has visto esta escena.",
@@ -179,7 +179,7 @@
     "koha": "Kohaku",
     "seo": "Akira",
     "ren": "Len",
-    "yume": "Dream"
+    "yume": "Sueño"
   },
   "yes": "Sí",
   "no": "No",
@@ -189,6 +189,6 @@
   "hint-confirm": "Confirmar",
   "hint-navigate": "Navegar",
   "later": "Más tarde",
-  "operation-failed": "Operation failed",
-  "operation-successful": "Operation successful"
+  "operation-failed": "Operación fallida",
+  "operation-successful": "Operación exitosa"
 }
