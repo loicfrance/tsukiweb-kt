@@ -8,6 +8,11 @@ import { QUICK_SAVE_ID, SaveState } from "engine/savestates";
 import { getLocale, useStrings } from "translation/lang";
 import { getSceneTitle, isScene } from "engine/utils";
 import { SceneName } from "app/utils/types";
+import { cachedFormat } from "@tsukiweb/common/utils/intl"
+
+const dateFormat = cachedFormat(locale => new Intl.DateTimeFormat(locale))
+const timeFormat = cachedFormat(locale =>
+	new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: '2-digit'}))
 
 type SaveListItemProps = ComponentProps<"button"> & {
 	saveId: number
@@ -50,8 +55,8 @@ const SaveListItem = ({saveId, saveState, isFocused, ...props}: SaveListItemProp
 					<SaveSummary saveState={saveState}/>
 				</div>
 				<time dateTime={date.toISOString()} className="date">
-					{isQuickSave && <>{date.toLocaleDateString(getLocale())} </>}
-					{date.toLocaleTimeString(getLocale(), {hour: 'numeric', minute: '2-digit'})}
+					{isQuickSave && <>{dateFormat(getLocale()).format(date)} </>}
+					{timeFormat(getLocale()).format(date)}
 				</time>
 			</div>
 			{isQuickSave &&
